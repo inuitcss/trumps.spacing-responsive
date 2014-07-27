@@ -36,6 +36,33 @@ $inuit-enable-responsive-paddings--none:            false !default;
 
 
 
+@mixin inuit-generate-spacing() {
+    @each $breakpoint in $breakpoints {
+
+        $inuit-generate-spacing-alias:     nth($breakpoint, 1) !global;
+        $inuit-generate-spacing-condition: nth($breakpoint, 2);
+
+        // This isn’t ideal, but we definitely don’t want to generate widths
+        // for retina devices. Exclude retina media-qeuries manually.
+        @if ($inuit-generate-spacing-alias != "retina") {
+    
+            @include media-query($inuit-generate-spacing-alias) {
+                @content;
+            } // Close media query.
+
+        } // Close retina check.
+
+        // Take the global variable back out of scope.
+        $inuit-generate-spacing-alias: null !global;
+
+    } // Close breakpoints loop.
+
+}
+
+
+
+
+
 @if ($inuit-enable-responsive-margins == true) {
 
     /**
@@ -44,30 +71,16 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
-
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-m      { margin:           $inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mt     { margin-top:       $inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mr     { margin-right:     $inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mb     { margin-bottom:    $inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ml     { margin-left:      $inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mh     { margin-right:     $inuit-margin !important; margin-left:      $inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mv     { margin-top:       $inuit-margin !important; margin-bottom:    $inuit-margin !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-m      { margin:           $inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mt     { margin-top:       $inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mr     { margin-right:     $inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mb     { margin-bottom:    $inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ml     { margin-left:      $inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mh     { margin-right:     $inuit-margin !important; margin-left:      $inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mv     { margin-top:       $inuit-margin !important; margin-bottom:    $inuit-margin !important; }
+    }
 
 }
 
@@ -78,30 +91,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add tiny margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-m--     { margin:           quarter($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mt--    { margin-top:       quarter($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mr--    { margin-right:     quarter($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mb--    { margin-bottom:    quarter($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ml--    { margin-left:      quarter($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mh--    { margin-right:     quarter($inuit-margin) !important; margin-left:     quarter($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mv--    { margin-top:       quarter($inuit-margin) !important; margin-bottom:   quarter($inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-m--     { margin:           quarter($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mt--    { margin-top:       quarter($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mr--    { margin-right:     quarter($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mb--    { margin-bottom:    quarter($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ml--    { margin-left:      quarter($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mh--    { margin-right:     quarter($inuit-margin) !important; margin-left:     quarter($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mv--    { margin-top:       quarter($inuit-margin) !important; margin-bottom:   quarter($inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -112,30 +112,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add small margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-m-      { margin:           halve($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mt-     { margin-top:       halve($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mr-     { margin-right:     halve($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mb-     { margin-bottom:    halve($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ml-     { margin-left:      halve($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mh-     { margin-right:     halve($inuit-margin) !important; margin-left:   halve($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mv-     { margin-top:       halve($inuit-margin) !important; margin-bottom: halve($inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-m-      { margin:           halve($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mt-     { margin-top:       halve($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mr-     { margin-right:     halve($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mb-     { margin-bottom:    halve($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ml-     { margin-left:      halve($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mh-     { margin-right:     halve($inuit-margin) !important; margin-left:   halve($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mv-     { margin-top:       halve($inuit-margin) !important; margin-bottom: halve($inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -146,30 +133,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add large margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-m\+     { margin:           double($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mt\+    { margin-top:       double($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mr\+    { margin-right:     double($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mb\+    { margin-bottom:    double($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ml\+    { margin-left:      double($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mh\+    { margin-right:     double($inuit-margin) !important; margin-left:      double($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mv\+    { margin-top:       double($inuit-margin) !important; margin-bottom:    double($inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-m\+     { margin:           double($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mt\+    { margin-top:       double($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mr\+    { margin-right:     double($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mb\+    { margin-bottom:    double($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ml\+    { margin-left:      double($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mh\+    { margin-right:     double($inuit-margin) !important; margin-left:      double($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mv\+    { margin-top:       double($inuit-margin) !important; margin-bottom:    double($inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -180,30 +154,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add huge margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-m\+\+   { margin:           quadruple($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mt\+\+  { margin-top:       quadruple($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mr\+\+  { margin-right:     quadruple($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mb\+\+  { margin-bottom:    quadruple($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ml\+\+  { margin-left:      quadruple($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mh\+\+  { margin-right:     quadruple($inuit-margin) !important; margin-left:   quadruple($inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mv\+\+  { margin-top:       quadruple($inuit-margin) !important; margin-bottom: quadruple($inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-m\+\+   { margin:           quadruple($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mt\+\+  { margin-top:       quadruple($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mr\+\+  { margin-right:     quadruple($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mb\+\+  { margin-bottom:    quadruple($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ml\+\+  { margin-left:      quadruple($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mh\+\+  { margin-right:     quadruple($inuit-margin) !important; margin-left:   quadruple($inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mv\+\+  { margin-top:       quadruple($inuit-margin) !important; margin-bottom: quadruple($inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -214,30 +175,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Remove margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-m0      { margin:           0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mt0     { margin-top:       0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mr0     { margin-right:     0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mb0     { margin-bottom:    0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ml0     { margin-left:      0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mh0     { margin-right:     0 !important; margin-left:      0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mv0     { margin-top:       0 !important; margin-bottom:    0 !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-m0      { margin:           0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mt0     { margin-top:       0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mr0     { margin-right:     0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mb0     { margin-bottom:    0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ml0     { margin-left:      0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mh0     { margin-right:     0 !important; margin-left:      0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-mv0     { margin-top:       0 !important; margin-bottom:    0 !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -248,30 +196,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Negative margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--m      { margin:           -$inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mt     { margin-top:       -$inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mr     { margin-right:     -$inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mb     { margin-bottom:    -$inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--ml     { margin-left:      -$inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mh     { margin-right:     -$inuit-margin !important; margin-left:      -$inuit-margin !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mv     { margin-top:       -$inuit-margin !important; margin-bottom:    -$inuit-margin !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}--m      { margin:           -$inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mt     { margin-top:       -$inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mr     { margin-right:     -$inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mb     { margin-bottom:    -$inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--ml     { margin-left:      -$inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mh     { margin-right:     -$inuit-margin !important; margin-left:      -$inuit-margin !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mv     { margin-top:       -$inuit-margin !important; margin-bottom:    -$inuit-margin !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -282,30 +217,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Tiny negative margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--m--    { margin:           quarter(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mt--   { margin-top:       quarter(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mr--   { margin-right:     quarter(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mb--   { margin-bottom:    quarter(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--ml--   { margin-left:      quarter(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mh--   { margin-right:     quarter(-$inuit-margin) !important; margin-left:     quarter(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mv--   { margin-top:       quarter(-$inuit-margin) !important; margin-bottom:   quarter(-$inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}--m--    { margin:           quarter(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mt--   { margin-top:       quarter(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mr--   { margin-right:     quarter(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mb--   { margin-bottom:    quarter(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--ml--   { margin-left:      quarter(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mh--   { margin-right:     quarter(-$inuit-margin) !important; margin-left:     quarter(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mv--   { margin-top:       quarter(-$inuit-margin) !important; margin-bottom:   quarter(-$inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -316,30 +238,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Small negative margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--m-     { margin:           halve(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mt-    { margin-top:       halve(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mr-    { margin-right:     halve(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mb-    { margin-bottom:    halve(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--ml-    { margin-left:      halve(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mh-    { margin-right:     halve(-$inuit-margin) !important; margin-left:   halve(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mv-    { margin-top:       halve(-$inuit-margin) !important; margin-bottom: halve(-$inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}--m-     { margin:           halve(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mt-    { margin-top:       halve(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mr-    { margin-right:     halve(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mb-    { margin-bottom:    halve(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--ml-    { margin-left:      halve(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mh-    { margin-right:     halve(-$inuit-margin) !important; margin-left:   halve(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mv-    { margin-top:       halve(-$inuit-margin) !important; margin-bottom: halve(-$inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -350,30 +259,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Large negative margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--m\+    { margin:           double(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mt\+   { margin-top:       double(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mr\+   { margin-right:     double(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mb\+   { margin-bottom:    double(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--ml\+   { margin-left:      double(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mh\+   { margin-right:     double(-$inuit-margin) !important; margin-left:      double(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mv\+   { margin-top:       double(-$inuit-margin) !important; margin-bottom:    double(-$inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}--m\+    { margin:           double(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mt\+   { margin-top:       double(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mr\+   { margin-right:     double(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mb\+   { margin-bottom:    double(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--ml\+   { margin-left:      double(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mh\+   { margin-right:     double(-$inuit-margin) !important; margin-left:      double(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mv\+   { margin-top:       double(-$inuit-margin) !important; margin-bottom:    double(-$inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -384,30 +280,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Huge negative margins.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--m\+\+  { margin:           quadruple(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mt\+\+ { margin-top:       quadruple(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mr\+\+ { margin-right:     quadruple(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mb\+\+ { margin-bottom:    quadruple(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--ml\+\+ { margin-left:      quadruple(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mh\+\+ { margin-right:     quadruple(-$inuit-margin) !important; margin-left:   quadruple(-$inuit-margin) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}--mv\+\+ { margin-top:       quadruple(-$inuit-margin) !important; margin-bottom: quadruple(-$inuit-margin) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}--m\+\+  { margin:           quadruple(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mt\+\+ { margin-top:       quadruple(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mr\+\+ { margin-right:     quadruple(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mb\+\+ { margin-bottom:    quadruple(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--ml\+\+ { margin-left:      quadruple(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mh\+\+ { margin-right:     quadruple(-$inuit-margin) !important; margin-left:   quadruple(-$inuit-margin) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}--mv\+\+ { margin-top:       quadruple(-$inuit-margin) !important; margin-bottom: quadruple(-$inuit-margin) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -423,30 +306,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add paddings.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-p       { padding:          $inuit-padding !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pt      { padding-top:      $inuit-padding !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pr      { padding-right:    $inuit-padding !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pb      { padding-bottom:   $inuit-padding !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pl      { padding-left:     $inuit-padding !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ph      { padding-right:    $inuit-padding !important; padding-left:    $inuit-padding !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pv      { padding-top:      $inuit-padding !important; padding-bottom:  $inuit-padding !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-p       { padding:          $inuit-padding !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pt      { padding-top:      $inuit-padding !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pr      { padding-right:    $inuit-padding !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pb      { padding-bottom:   $inuit-padding !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pl      { padding-left:     $inuit-padding !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ph      { padding-right:    $inuit-padding !important; padding-left:    $inuit-padding !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pv      { padding-top:      $inuit-padding !important; padding-bottom:  $inuit-padding !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -457,30 +327,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add tiny paddings.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-p--     { padding:           quarter($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pt--    { padding-top:       quarter($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pr--    { padding-right:     quarter($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pb--    { padding-bottom:    quarter($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pl--    { padding-left:      quarter($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ph--    { padding-right:     quarter($inuit-padding) !important; padding-left:      quarter($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pv--    { padding-top:       quarter($inuit-padding) !important; padding-bottom:    quarter($inuit-padding) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-p--     { padding:           quarter($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pt--    { padding-top:       quarter($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pr--    { padding-right:     quarter($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pb--    { padding-bottom:    quarter($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pl--    { padding-left:      quarter($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ph--    { padding-right:     quarter($inuit-padding) !important; padding-left:      quarter($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pv--    { padding-top:       quarter($inuit-padding) !important; padding-bottom:    quarter($inuit-padding) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -491,30 +348,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add small paddings.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-p-      { padding:           halve($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pt-     { padding-top:       halve($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pr-     { padding-right:     halve($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pb-     { padding-bottom:    halve($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pl-     { padding-left:      halve($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ph-     { padding-right:     halve($inuit-padding) !important; padding-left:    halve($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pv-     { padding-top:       halve($inuit-padding) !important; padding-bottom:  halve($inuit-padding) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-p-      { padding:           halve($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pt-     { padding-top:       halve($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pr-     { padding-right:     halve($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pb-     { padding-bottom:    halve($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pl-     { padding-left:      halve($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ph-     { padding-right:     halve($inuit-padding) !important; padding-left:    halve($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pv-     { padding-top:       halve($inuit-padding) !important; padding-bottom:  halve($inuit-padding) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -525,30 +369,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add large paddings.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-p\+     { padding:           double($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pt\+    { padding-top:       double($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pr\+    { padding-right:     double($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pb\+    { padding-bottom:    double($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pl\+    { padding-left:      double($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ph\+    { padding-right:     double($inuit-padding) !important; padding-left:   double($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pv\+    { padding-top:       double($inuit-padding) !important; padding-bottom: double($inuit-padding) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-p\+     { padding:           double($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pt\+    { padding-top:       double($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pr\+    { padding-right:     double($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pb\+    { padding-bottom:    double($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pl\+    { padding-left:      double($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ph\+    { padding-right:     double($inuit-padding) !important; padding-left:   double($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pv\+    { padding-top:       double($inuit-padding) !important; padding-bottom: double($inuit-padding) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -559,30 +390,17 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Add huge paddings.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-p\+\+   { padding:           quadruple($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pt\+\+  { padding-top:       quadruple($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pr\+\+  { padding-right:     quadruple($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pb\+\+  { padding-bottom:    quadruple($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pl\+\+  { padding-left:      quadruple($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ph\+\+  { padding-right:     quadruple($inuit-padding) !important; padding-left:    quadruple($inuit-padding) !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pv\+\+  { padding-top:       quadruple($inuit-padding) !important; padding-bottom:  quadruple($inuit-padding) !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-p\+\+   { padding:           quadruple($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pt\+\+  { padding-top:       quadruple($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pr\+\+  { padding-right:     quadruple($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pb\+\+  { padding-bottom:    quadruple($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pl\+\+  { padding-left:      quadruple($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ph\+\+  { padding-right:     quadruple($inuit-padding) !important; padding-left:    quadruple($inuit-padding) !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pv\+\+  { padding-top:       quadruple($inuit-padding) !important; padding-bottom:  quadruple($inuit-padding) !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
 
@@ -593,29 +411,16 @@ $inuit-enable-responsive-paddings--none:            false !default;
      * Remove paddings.
      */
 
-    @each $breakpoint in $breakpoints {
+    @include inuit-generate-spacing() {
 
-        $alias:     nth($breakpoint, 1);
-        $condition: nth($breakpoint, 2);
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-p0      { padding:          0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pt0     { padding-top:      0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pr0     { padding-right:    0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pb0     { padding-bottom:   0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pl0     { padding-left:     0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ph0     { padding-right:    0 !important; padding-left:     0 !important; }
+        .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-pv0     { padding-top:      0 !important; padding-bottom:   0 !important; }
 
-        // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
-        @if ($alias != "retina") {
-    
-            @include media-query($alias) {
-
-                .#{$inuit-spacing-namespace}#{$alias}-p0      { padding:          0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pt0     { padding-top:      0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pr0     { padding-right:    0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pb0     { padding-bottom:   0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pl0     { padding-left:     0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-ph0     { padding-right:    0 !important; padding-left:     0 !important; }
-                .#{$inuit-spacing-namespace}#{$alias}-pv0     { padding-top:      0 !important; padding-bottom:   0 !important; }
-
-            } // Close media query.
-
-        } // Close retina check.
-
-    } // Close breakpoints loop.
+    }
 
 }
