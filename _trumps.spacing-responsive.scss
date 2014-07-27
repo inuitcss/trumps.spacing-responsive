@@ -36,11 +36,16 @@ $inuit-enable-responsive-paddings--none:            false !default;
 
 
 
+// Internally used mixin to quickly generate our different variants based upon
+// the breakpoints defined in `settings.responsive`.
+
 @mixin inuit-generate-spacing() {
+
+    // Loop through our previously-defined breakpoints.
     @each $breakpoint in $breakpoints {
 
-        $inuit-generate-spacing-alias:     nth($breakpoint, 1) !global;
-        $inuit-generate-spacing-condition: nth($breakpoint, 2);
+        $inuit-generate-spacing-alias:      nth($breakpoint, 1) !global;
+        $inuit-generate-spacing-condition:  nth($breakpoint, 2);
 
         // This isn’t ideal, but we definitely don’t want to generate widths
         // for retina devices. Exclude retina media-qeuries manually.
@@ -80,6 +85,7 @@ $inuit-enable-responsive-paddings--none:            false !default;
         .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-ml     { margin-left:      $inuit-margin !important; }
         .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mh     { margin-right:     $inuit-margin !important; margin-left:      $inuit-margin !important; }
         .#{$inuit-spacing-namespace}#{$inuit-generate-spacing-alias}-mv     { margin-top:       $inuit-margin !important; margin-bottom:    $inuit-margin !important; }
+
     }
 
 }
