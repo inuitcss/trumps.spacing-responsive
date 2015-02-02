@@ -1,6 +1,6 @@
 {
   "name": "inuit-responsive-spacing",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Responsively controlled width classes for the inuitcss framework",
   "main": "_trumps.spacing-responsive.scss",
   "repository": {
