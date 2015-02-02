@@ -9,4 +9,4 @@ Install using Bower:
 
 Install using npm:
 
-    $ npm install --save inuit-spacing-responsive
+    $ npm install --save inuit-responsive-spacing
