@@ -1,7 +1,7 @@
 # Spacing-responsive
 
 The inuitcss `spacing-responsive` module provides breakpoint-based classes for
-nudging margins and paddings around responsively, e.g. `.lap-mb0`, `.desk-mb++`.
+nudging margins and paddings around responsively, e.g. `.u-mb0@lap`, `.u-mb-large@desk`.
 
 Install using Bower:
 
