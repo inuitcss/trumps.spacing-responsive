@@ -20,9 +20,9 @@
     "rwd"
   ],
   "dependencies": {
-    "inuit-defaults": "~0.2.1",
-    "inuit-responsive-settings": "~0.1.2",
-    "inuit-responsive-tools": "~0.1.1",
-    "inuit-spacing": "~0.6.1"
+    "inuit-defaults": "~0.2.3",
+    "inuit-responsive-settings": "~0.1.5",
+    "inuit-responsive-tools": "~0.1.3",
+    "inuit-spacing": "~0.7.0"
   }
 }
