@@ -48,7 +48,7 @@ $inuit-enable-responsive-paddings--none:            false !default;
         $inuit-generate-spacing-condition:  nth($breakpoint, 2);
 
         // This isn’t ideal, but we definitely don’t want to generate widths
-        // for retina devices. Exclude retina media-qeuries manually.
+        // for retina devices. Exclude retina media-queries manually.
         @if ($inuit-generate-spacing-alias != "retina") {
     
             @include media-query($inuit-generate-spacing-alias) {
